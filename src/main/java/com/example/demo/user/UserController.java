@@ -1,5 +1,6 @@
 package com.example.demo.user;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuário já existe");
         }
 
+        var passwordHash = BCrypt.withDefaults().hashToString(12, user.getPassword().toCharArray());
+
+        user.setPassword(passwordHash);
 
         var usedCreated = this.userRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(usedCreated);
