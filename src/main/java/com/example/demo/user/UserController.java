@@ -30,6 +30,6 @@ public class UserController {
         user.setPassword(passwordHash);
 
         var usedCreated = this.userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(usedCreated);
+        return ResponseEntity.status(HttpStatus.OK).body(usedCreated);
     }
 }
